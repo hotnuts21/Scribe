@@ -14,11 +14,7 @@ echo head($head);
         <!-- navigation -->
         <ul class="nav nav-tabs">
             <li class="active"><a href="<?php echo html_escape(url('scripto/index/login')); ?>"><?php echo __('Log in to Scripto'); ?></a></li>
-<!--
-    mediawiki doesn't offer account creation through their API. You must link directly to the page in your installation
-    /my_mediawiki_install_directory/index.php5?title=Special:UserLogin&type=signup
--->
-            <li><a href="#" target="_blank"><?php echo __('Create an account'); ?></a></li>
+            <li><a href="<?php echo html_escape(url('scripto/index/register')); ?>"><?php echo __('Create an account'); ?></a></li>
             <li><a href="<?php echo html_escape(url('scripto/recent-changes')); ?>"><?php echo __('Recent changes'); ?></a></li>
         </ul>
         <p><?php echo __(

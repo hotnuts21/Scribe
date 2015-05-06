@@ -596,3 +596,12 @@ hr {
 .nav-tabs > li > span:hover > a {
     text-decoration:none;
 }
+/* Scripto */
+.error{
+    color:red;
+    margin-bottom:20px;
+}
+.succes{
+    font-style: bold;
+    margin-bottom:20px;
+}
