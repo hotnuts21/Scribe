@@ -1,6 +1,11 @@
 <?php
 $titleArray = array(__('Scripto'), __('Transcribe Page'));
+queue_css_file('scripto-transcribe');
 $head = array('title' => html_escape(implode(' | ', $titleArray)));
+
+//editor coolness
+queue_js_file('editor-bar');
+
 echo head($head);
 if (get_option('scripto_image_viewer') == 'openlayers') {
     echo js_tag('OpenLayers');
@@ -11,11 +16,12 @@ if (get_option('scripto_image_viewer') == 'openlayers') {
 <script type="text/javascript">
 jQuery(document).ready(function() {
 
+
     // Handle edit transcription page.
     jQuery('#scripto-transcription-page-edit').click(function() {
         jQuery('#scripto-transcription-page-edit').
             prop('disabled', true).
-            text('<?php echo __('Editing transcription...'); ?>');
+            text('<?php echo __('Saving transcription...'); ?>');
         jQuery.post(
             <?php echo js_escape(url('scripto/index/page-action')); ?>,
             {
@@ -28,7 +34,7 @@ jQuery(document).ready(function() {
             function(data) {
                 jQuery('#scripto-transcription-page-edit').
                     prop('disabled', false).
-                    text('<?php echo __('Edit transcription'); ?>');
+                    text('<?php echo __('Save transcription'); ?>');
                 jQuery('#scripto-transcription-page-html').html(data);
             }
         );
@@ -333,12 +339,11 @@ jQuery(document).ready(function() {
 <?php endif; ?>
 <div id="primary">
 <?php echo flash(); ?>
-
     <ul class="breadcrumb">
-        <li><a href="<?php echo WEB_ROOT; ?>">Home</a><span class="divider">/</span></li>
-        <li><a href="<?php echo url('collections'); ?>"></a></li>
-        <li><a href="<?php echo url(array('controller' => 'items', 'action' => 'show', 'id' => $this->doc->getId()), 'id'); ?>"><?php echo $this->doc->getTitle(); ?></a><span class="divider">/</span></li>
-        <li><?php echo metadata($file, array('Dublin Core', 'Title')); ?></li>
+      <li><?php echo link_to_home_page('Home'); ?></li>
+      <li><?php echo link_to_collection_for_item($collection->name, array('id' => 'item-collection-link',)); ?></li>
+      <li><?php echo link_to_item();?></li>
+      <li class="active"><?php echo __('Transcribe') ?></li>
     </ul>
     <div id="scripto-transcribe" class="scripto">
         <!-- navigation -->
@@ -363,10 +368,6 @@ jQuery(document).ready(function() {
         <div>
             <div><strong><?php echo metadata($this->file, array('Dublin Core', 'Title')); ?></strong></div>
             <div>image <?php echo html_escape($this->paginationUrls['current_page_number']); ?> of <?php echo html_escape($this->paginationUrls['number_of_pages']); ?></div>
-            <div>
-                <?php //echo metadata($this->$file, array('Dublin Core', 'Source')); ?>
-                <?php //echo metadata($item, array('Dublin Core', 'Relation')); ?>
-            </div>
         </div>
 
         <!-- document viewer -->
@@ -394,10 +395,11 @@ jQuery(document).ready(function() {
                 <div class="alert alert-info">
                     <strong>This item is editable!</strong>
                 </div><!--alert alert-info-->
-                <div><?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('cols' => '76', 'rows' => '16')); ?></div>
+        <div><?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('cols' => '76', 'rows' => '16')); ?></div>
+
                 <?php endif; ?>
                 <div>
-                    <?php echo $this->formButton('scripto-transcription-page-edit', __('Edit transcription'), array('style' => 'display:inline; float:none;')); ?>
+                    <?php echo $this->formButton('scripto-transcription-page-edit', __('Save transcription'), array('style' => 'display:inline; float:none;')); ?>
                 </div>
                 <p><a href="http://www.mediawiki.org/wiki/Help:Formatting" target="_blank"><?php echo __('wiki formatting help'); ?></a></p>
             </div><!-- #scripto-transcription-edit -->
