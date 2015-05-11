@@ -14,7 +14,7 @@ echo head($head);
       <!-- navigation -->
 
       <?php //if registered show message
-        if($registeredOK){  ?>
+        if(isset($registeredOK)){  ?>
           <ul class="nav nav-tabs">
             <li><a href="<?php echo html_escape(url('scripto/index/login')); ?>"><?php echo __('Log in to Scripto'); ?></a></li>
             <li class="active"><a href="<?php echo html_escape(url('scripto/index/register')); ?>"><?php echo __('Create an account'); ?></a></li>
