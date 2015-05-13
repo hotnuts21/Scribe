@@ -5,6 +5,7 @@ $head = array('title' => html_escape(implode(' | ', $titleArray)));
 
 //editor coolness
 queue_js_file('editor-bar');
+queue_css_url('../../../../mwiki/extensions/TEITags/css/ext.teitags.css');
 
 echo head($head);
 if (get_option('scripto_image_viewer') == 'openlayers') {
@@ -339,6 +340,7 @@ jQuery(document).ready(function() {
 <?php endif; ?>
 <div id="primary">
 <?php echo flash(); ?>
+
     <ul class="breadcrumb">
       <li><?php echo link_to_home_page('Home'); ?></li>
       <li><?php echo link_to_collection_for_item($collection->name, array('id' => 'item-collection-link',)); ?></li>
@@ -395,7 +397,25 @@ jQuery(document).ready(function() {
                 <div class="alert alert-info">
                     <strong>This item is editable!</strong>
                 </div><!--alert alert-info-->
-        <div><?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('cols' => '76', 'rows' => '16')); ?></div>
+        <div>
+          <!-- editor buttons -->
+          <p>
+            <button id ="head" class="btn btn-small btn-info" type="button">Heading</button>
+            <button id ="lb" class="btn btn-small btn-info" type="button">Line break</button>
+            <button id ="add" class="btn btn-small btn-info" type="button">Addition</button>
+            <button id ="del" class="btn btn-small btn-info" type="button">Deletion</button>
+            <button id ="subst" class="btn btn-small btn-info" type="button">Substitution</button>
+            <button id ="gap" class="btn btn-small btn-info" type="button">Illegible</button>
+            <button id ="unclear" class="btn btn-small btn-info" type="button">Unclear</button>
+            <button id ="note" class="btn btn-small btn-info" type="button">Note</button>
+            <button id ="subs" class="btn btn-small btn-info" type="button">Superscript</button>
+            <button id ="sic" class="btn btn-small btn-info" type="button">SIC</button>
+            <button id ="foreign" class="btn btn-small btn-info" type="button">Foreign</button>
+            <button id ="und" class="btn btn-small btn-info" type="button">Underline</button>
+          </p>
+          <!-- text area -->
+          <?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('cols' => '76', 'rows' => '16')); ?>
+        </div>
 
                 <?php endif; ?>
                 <div>
