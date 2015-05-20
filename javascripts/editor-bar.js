@@ -44,6 +44,12 @@ jQuery("document").ready(function($){
   $('#und').on('click', function () {
       _insertAtCaret($('#scripto-transcription-page-wikitext'), "<hi>  </hi>","<hi>","</hi>");
   });
+  $('#person').on('click', function () {
+      _insertAtCaret($('#scripto-transcription-page-wikitext'), "<person>  </person>","<person>","</person>");
+  });
+  $('#place').on('click', function () {
+      _insertAtCaret($('#scripto-transcription-page-wikitext'), "<place>  </place>","<place>","</place>");
+  });
 
 
 
