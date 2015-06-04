@@ -41,43 +41,48 @@
     $scripto = ScriptoPlugin::getScripto();
 ?>
 
-    <div class="container-fluid">
-      <!--header area -->
-      <header id="header" role="banner">
+  <header id="header" role="banner">
+    <!--header area -->
+    <div class="navbar navbar-static-top">
+      <div class="navbar-inner">
+        <div class="container">
+          <a class="brand" href="../">Unlocking the Chartist</a>
+          <div class="nav-collapse collapse" id="main-menu">
+            <?php
+            $mainNav = public_nav_main();
+            $mainNav->setUlClass('nav')->setUlId('main-menu-left');
+            echo $mainNav;
+            ?>
 
-        <div class="row-fluid">
-          <div class="span10"> Logo</div>
-          <div class="span2">
+            <ul class="nav pull-right" id="main-menu-right">
+                  <?php if ($scripto->isLoggedIn()): ?>
+                  <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $scripto->getUserName(); ?><b class="caret"></b></a>
+                      <ul class="dropdown-menu">
+                          <li><a href="<?php echo WEB_ROOT; ?>/scripto">Your Contributions</a></li>
+                          <li><a href="<?php echo WEB_ROOT; ?>/scripto/watchlist">Your Watchlist</a></li>
+                          <li><a href="<?php echo WEB_ROOT; ?>/scripto/recent-changes">Recent Changes</a></li>
+                          <li><a href="<?php echo WEB_ROOT; ?>/scripto/logout">Logout</a></li>
+                      </ul>
+                  </li>
 
-            <div id="sublinks" class="masthead clearfix">
+                  <?php else: ?>
 
-                <ul class="nav nav-pills pull-right">
+                  <li>
+                  <a href="<?php echo WEB_ROOT; ?>/scripto/login">Sign in or register</a>
+                  </li>
 
-                    <?php if ($scripto->isLoggedIn()): ?>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><?php echo $scripto->getUserName(); ?></strong><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto">Your Contributions</a></li>
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto/watchlist">Your Watchlist</a></li>
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto/recent-changes">Recent Changes</a></li>
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto/logout">Logout</a></li>
-                        </ul>
-                    </li>
-
-                    <?php else: ?>
-
-                    <li>
-                    <a href="<?php echo WEB_ROOT; ?>/scripto/login">Sign in or register</a>
-                    </li>
-
-                    <?php endif; ?>
-                </ul>
-            </div>
+                  <?php endif; ?>
+              </ul>
+            </ul>
           </div>
         </div>
+      </div>
+    </div>
 
-      </header><!-- end header -->
-        <!-- start of main page structure -->
-
-        <div class="row-fluid">
+    </header><!-- end header -->
+    <!-- start of main page structure -->
+    <div class="container-fluid">
+      <div class="row-fluid top-buffer">
 
             <?php fire_plugin_hook('public_content_top', array('view'=>$this)); ?>
