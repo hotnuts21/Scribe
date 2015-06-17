@@ -45,7 +45,6 @@
     <!--header area -->
     <div class="navbar navbar-static-top">
       <div class="navbar-inner">
-        <div class="container">
           <a class="brand" href="../">Unlocking the Chartist</a>
           <div class="nav-collapse collapse" id="main-menu">
             <?php
@@ -76,7 +75,6 @@
               </ul>
             </ul>
           </div>
-        </div>
       </div>
     </div>
 

@@ -40,8 +40,8 @@ echo common('header-transc');
 
         <h3><?php // echo $this->doc->getPageName(); ?></h3>
 
-        <div class="fill">
-            <div><strong><?php echo metadata($this->file, array('Dublin Core', 'Title')); ?></strong></div>
+
+            <p><strong><?php echo metadata($this->file, array('Dublin Core', 'Title')); ?></strong></p>
             <p>image <?php echo html_escape($this->paginationUrls['current_page_number']); ?> of <?php echo html_escape($this->paginationUrls['number_of_pages']); ?>
 
             <!-- pagination -->
@@ -59,9 +59,9 @@ echo common('header-transc');
   ?>  </p>
 
             <!-- transcription -->
-            <div id="scripto-transcription">
+            <div class="scripto-transcription rounded">
             <?php if ($this->doc->canEditTranscriptionPage()): ?>
-                <div id="scripto-transcription-edit">
+
                 <?php if ($this->doc->isProtectedTranscriptionPage()): ?>
                     <div class="alert alert-error">
                         <strong>This transcription is complete!</strong>
@@ -70,17 +70,17 @@ echo common('header-transc');
                         <?php echo $this->transcriptionPageHtml; ?>
                     </div>
                     <?php else: ?>
-            <div>
+
               <!-- editor buttons -->
-              <p>
+              <p align="center">
                 <button id ="head" class="btn btn-mini btn-primary" type="button">Heading</button>
                 <button id ="lb" class="btn btn-mini btn-primary" type="button">Line break</button>
                 <button id ="add" class="btn btn-mini btn-primary" type="button">Addition</button>
                 <button id ="del" class="btn btn-mini btn-primary" type="button">Deletion</button>
                 <button id ="subst" class="btn btn-mini btn-primary" type="button">Substitution</button>
                 <button id ="gap" class="btn btn-mini btn-primary" type="button">Illegible</button>
-                <button id ="sic" class="btn btn-mini btn-primary" type="button">SIC</button></p>
-              <p>
+                <button id ="sic" class="btn btn-mini btn-primary" type="button">SIC</button>
+              </p><p align="center">
                 <button id ="note" class="btn btn-mini btn-info" type="button">Note</button>
                 <button id ="subs" class="btn btn-mini btn-info" type="button">Superscript</button>
                 <button id ="unclear" class="btn btn-mini btn-info" type="button">Unclear</button>
@@ -90,18 +90,18 @@ echo common('header-transc');
                 <button id ="place" class="btn btn-mini btn-success" type="button">Place</button>
               </p>
               <!-- text area -->
-              <?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('style' => 'margin: 0px 0px 10px; width: 100%; height: 200px;')); ?>
-            </div>
+              <?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('style'=> 'height:200px;', 'class'=> 'span12')); ?>
+
 
                     <?php endif; ?>
-                    <div>
+                    <p>
                         <?php echo $this->formButton('scripto-transcription-page-edit', __('Save and update'), array('style' => 'display:inline; float:none;')); ?>
-                    </div>
-                </div><!-- #scripto-transcription-edit -->
+                    </p>
+
             <?php else: ?>
                 <p><?php echo __('Please login to transcribe this page.'); ?></p>
             <?php endif; ?>
-
+          </div><!-- #scripto-transcription -->
                 <p><strong><?php echo __('Current Page Transcription'); ?>
                 <?php if ($this->scripto->canProtect()): ?> [<a href="<?php echo html_escape($this->doc->getTranscriptionPageMediawikiUrl()); ?>"><?php echo __('wiki'); ?></a>]<?php endif; ?>
                 [<a href="<?php echo html_escape(url(array('item-id' => $this->doc->getId(), 'file-id' => $this->doc->getPageId(), 'namespace-index' => 0), 'scripto_history')); ?>"><?php echo __('history'); ?></a>]</strong></p>
@@ -112,7 +112,7 @@ echo common('header-transc');
                     <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-page-import', __('Import page'), array('style' => 'display:inline; float:none;')); ?><?php endif; ?>
                 </div>
 
-            </div><!-- #scripto-transcription -->
+
 
             <?php if ($this->scripto->canExport()): ?><div><?php echo $this->formButton('scripto-transcription-document-import', __('Import document'), array('style' => 'display:inline; float:none;')); ?></div><?php endif; ?>
 
@@ -151,7 +151,7 @@ echo common('header-transc');
               </ul>
             </div><!-- end options -->
 
-        </div><!-- end fill -->
+        <!-- end fill -->
 
 
       </div><!--end of left column-->
