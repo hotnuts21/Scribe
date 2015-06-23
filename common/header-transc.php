@@ -81,6 +81,6 @@
     </header><!-- end header -->
     <!-- start of main page structure -->
     <div class="container-fluid">
-      <div class="row-fluid top-buffer">
+      <div class="row-fluid top-buffer"><!--main row ends in footer unless page requires many rows -->
 
             <?php fire_plugin_hook('public_content_top', array('view'=>$this)); ?>

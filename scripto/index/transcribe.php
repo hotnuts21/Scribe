@@ -20,7 +20,11 @@ echo common('header-transc');
 
 //load the JS for scripto
 ?>
-
+        <!-- right column (image)-->
+      <div class="span7">
+          <!-- openseadragon viewer ready for iIIIF -->
+          <div id="image-viewer" style="width: 100%; height: 650px;" ></div>
+      </div><!-- end of right column -->
 
       <!-- left column (transcription) -->
       <div class="span5">
@@ -32,139 +36,147 @@ echo common('header-transc');
           <li class="active"><?php echo __('Transcribe') ?></li>
         </ul>
 
-
         <?php echo flash(); ?>
-
-
-        <h2><?php if ($this->doc->getTitle()): ?><?php echo $this->doc->getTitle(); ?><?php else: ?><?php echo __('Untitled Document'); ?><?php endif; ?></h2>
-
-        <h3><?php // echo $this->doc->getPageName(); ?></h3>
-
-
-            <p><strong><?php echo metadata($this->file, array('Dublin Core', 'Title')); ?></strong></p>
-            <p>image <?php echo html_escape($this->paginationUrls['current_page_number']); ?> of <?php echo html_escape($this->paginationUrls['number_of_pages']); ?>
-
-            <!-- pagination -->
-
-<?php if (isset($this->paginationUrls['previous'])) {
-  echo '<a href="' . html_escape($this->paginationUrls['previous']) . '">&#171; ' .  __('previous page') . '</a>';
-  }
-      if (isset($this->paginationUrls['previous']) && isset($this->paginationUrls['next'])) {
-    echo ' | ';
-  }
-      if (isset($this->paginationUrls['next'])) {
-    echo '<a href="' . html_escape($this->paginationUrls['next']) . '">' .  __('next page') . ' &#187;</a>';
-    }
-
-  ?>  </p>
-
-            <!-- transcription -->
-            <div class="scripto-transcription rounded">
-            <?php if ($this->doc->canEditTranscriptionPage()): ?>
-
-                <?php if ($this->doc->isProtectedTranscriptionPage()): ?>
-                    <div class="alert alert-error">
-                        <strong>This transcription is complete!</strong>
-                    </div><!--alert alert-error-->
-                    <div id="scripto-transcription-page-html">
-                        <?php echo $this->transcriptionPageHtml; ?>
-                    </div>
-                    <?php else: ?>
-
-              <!-- editor buttons -->
-              <p align="center">
-                <button id ="head" class="btn btn-mini btn-primary" type="button">Heading</button>
-                <button id ="lb" class="btn btn-mini btn-primary" type="button">Line break</button>
-                <button id ="add" class="btn btn-mini btn-primary" type="button">Addition</button>
-                <button id ="del" class="btn btn-mini btn-primary" type="button">Deletion</button>
-                <button id ="subst" class="btn btn-mini btn-primary" type="button">Substitution</button>
-                <button id ="gap" class="btn btn-mini btn-primary" type="button">Illegible</button>
-                <button id ="sic" class="btn btn-mini btn-primary" type="button">SIC</button>
-              </p><p align="center">
-                <button id ="note" class="btn btn-mini btn-info" type="button">Note</button>
-                <button id ="subs" class="btn btn-mini btn-info" type="button">Superscript</button>
-                <button id ="unclear" class="btn btn-mini btn-info" type="button">Unclear</button>
-                <button id ="foreign" class="btn btn-mini btn-info" type="button">Foreign</button>
-                <button id ="und" class="btn btn-mini btn-info" type="button">Underline</button>
-                <button id ="person" class="btn btn-mini btn-success" type="button">Person</button>
-                <button id ="place" class="btn btn-mini btn-success" type="button">Place</button>
+        <div class="row-fluid">
+          <div class="span12">
+            <h3><?php echo $this->doc->getPageName(); ?></h3>
+          </div>
+        </div>
+        <div class="row-fluid"><!-- pagination -->
+          <div class="span4">
+            <p>Image <?php echo html_escape($this->paginationUrls['current_page_number']); ?> of <?php echo html_escape($this->paginationUrls['number_of_pages']); ?>
+          </div>
+          <div class="span3 offset1">
+              <p>
+                <?php if (isset($this->paginationUrls['previous'])) {
+                  echo '<a href="' . html_escape($this->paginationUrls['previous']) . '">&#171; ' .  __('previous page') . '</a>';
+                } ?>
               </p>
-              <!-- text area -->
-              <?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('style'=> 'height:200px;', 'class'=> 'span12')); ?>
+          </div>
+          <div class="span1">
+            <p>
+              <?php if (isset($this->paginationUrls['previous']) && isset($this->paginationUrls['next'])) {
+                echo ' | ';
+              } ?>
+            </p>
+          </div>
+          <div class="span3">
+            <p>
+              <?php
+              if (isset($this->paginationUrls['next'])) {
+                echo '<a href="' . html_escape($this->paginationUrls['next']) . '">' .  __('next page') . ' &#187;</a>';
+              }
+              ?>
+            </p>
+          </div>
+        </div>
+        <div class="row-fluid">
+          <!-- transcription -->
+          <div class="span12 scripto-transcription rounded">
+          <?php if ($this->doc->canEditTranscriptionPage()): ?>
+              <?php if ($this->doc->isProtectedTranscriptionPage()): ?>
+                    <p>  <strong>This transcription is complete!</strong> </p>
+              <?php else: ?>
+                <!-- editor buttons -->
+                <p align="center">
+                  <button id ="head" class="btn btn-mini btn-primary" type="button">Heading</button>
+                  <button id ="lb" class="btn btn-mini btn-primary" type="button">Line break</button>
+                  <button id ="add" class="btn btn-mini btn-primary" type="button">Addition</button>
+                  <button id ="del" class="btn btn-mini btn-primary" type="button">Deletion</button>
+                  <button id ="subst" class="btn btn-mini btn-primary" type="button">Substitution</button>
+                  <button id ="gap" class="btn btn-mini btn-primary" type="button">Illegible</button>
+                  <button id ="sic" class="btn btn-mini btn-primary" type="button">SIC</button>
+                </p><p align="center">
+                  <button id ="note" class="btn btn-mini btn-info" type="button">Note</button>
+                  <button id ="subs" class="btn btn-mini btn-info" type="button">Superscript</button>
+                  <button id ="unclear" class="btn btn-mini btn-info" type="button">Unclear</button>
+                  <button id ="foreign" class="btn btn-mini btn-info" type="button">Foreign</button>
+                  <button id ="und" class="btn btn-mini btn-info" type="button">Underline</button>
+                  <button id ="person" class="btn btn-mini btn-success" type="button">Person</button>
+                  <button id ="place" class="btn btn-mini btn-success" type="button">Place</button>
+                </p>
+                <!-- text area -->
+                <?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('style'=> 'height:200px;', 'class'=> 'span12')); ?>
+                <p><?php echo $this->formButton('scripto-transcription-page-edit', __('Save and update'), array('style' => 'display:inline; float:none;')); ?></p>
+             <?php endif; ?>
 
 
-                    <?php endif; ?>
-                    <p>
-                        <?php echo $this->formButton('scripto-transcription-page-edit', __('Save and update'), array('style' => 'display:inline; float:none;')); ?>
-                    </p>
-
-            <?php else: ?>
-                <p><?php echo __('Please login to transcribe this page.'); ?></p>
-            <?php endif; ?>
+          <?php else: ?>
+              <p><?php echo __('Please login to transcribe this page.'); ?></p>
+          <?php endif; ?>
           </div><!-- #scripto-transcription -->
-                <p><strong><?php echo __('Current Page Transcription'); ?>
-                <?php if ($this->scripto->canProtect()): ?> [<a href="<?php echo html_escape($this->doc->getTranscriptionPageMediawikiUrl()); ?>"><?php echo __('wiki'); ?></a>]<?php endif; ?>
-                [<a href="<?php echo html_escape(url(array('item-id' => $this->doc->getId(), 'file-id' => $this->doc->getPageId(), 'namespace-index' => 0), 'scripto_history')); ?>"><?php echo __('history'); ?></a>]</strong></p>
-                <div id="scripto-transcription-page-html"><?php echo $this->transcriptionPageHtml; ?></div>
-                <div>
-                    <?php if ($this->scripto->isLoggedIn()): ?><?php echo $this->formButton('scripto-page-watch'); ?> <?php endif; ?>
-                    <?php if ($this->scripto->canProtect()): ?><?php echo $this->formButton('scripto-transcription-page-protect'); ?> <?php endif; ?>
-                    <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-page-import', __('Import page'), array('style' => 'display:inline; float:none;')); ?><?php endif; ?>
-                </div>
+        </div>
+
+        <div class="row-fluid top-buffer">
+          <div class="span12" id="scripto-transcription-page-html">
+            <?php echo $this->transcriptionPageHtml; ?>
+
+            <?php if ($this->scripto->canProtect()): ?>
+              <p>
+                [<a href="<?php echo html_escape($this->doc->getTranscriptionPageMediawikiUrl()); ?>"><?php echo __('wiki'); ?></a>]
+            <?php endif; ?>
+                [<a href="<?php echo html_escape(url(array('item-id' => $this->doc->getId(), 'file-id' => $this->doc->getPageId(), 'namespace-index' => 0), 'scripto_history')); ?>"><?php echo __('history'); ?></a>]</strong>
+              </p>
+          </div>
+        </div>
 
 
 
-            <?php if ($this->scripto->canExport()): ?><div><?php echo $this->formButton('scripto-transcription-document-import', __('Import document'), array('style' => 'display:inline; float:none;')); ?></div><?php endif; ?>
 
-            <!-- discussion -->
-            <div id="scripto-talk">
-                <?php if ($this->doc->canEditTalkPage()): ?>
-                <div id="scripto-talk-edit">
-                    <div><?php echo $this->formTextarea('scripto-talk-page-wikitext', $this->doc->getTalkPageWikitext(), array('cols' => '76', 'rows' => '16')); ?></div>
-                    <div>
-                        <?php echo $this->formButton('scripto-talk-page-edit', __('Edit discussion'), array('style' => 'display:inline; float:none;')); ?>
-                    </div>
-                    <p><a href="http://www.mediawiki.org/wiki/Help:Formatting" target="_blank"><?php echo __('wiki formatting help'); ?></a></p>
-                </div><!-- #scripto-talk-edit -->
-                <?php else: ?>
-                <p><?php echo __('You don\'t have permission to discuss this page.'); ?></p>
-                <?php endif; ?>
-                <h2><?php echo __('Current Page Discussion'); ?>
-                <?php if ($this->doc->canEditTalkPage()): ?> [<a href="#" id="scripto-talk-edit-show"><?php echo __('edit'); ?></a>]<?php endif; ?>
-                <?php if ($this->scripto->canProtect()): ?> [<a href="<?php echo html_escape($this->doc->getTalkPageMediawikiUrl()); ?>"><?php echo __('wiki'); ?></a>]<?php endif; ?>
-                [<a href="<?php echo html_escape(url(array('item-id' => $this->doc->getId(), 'file-id' => $this->doc->getPageId(), 'namespace-index' => 1), 'scripto_history')); ?>"><?php echo __('history'); ?></a>]</h2>
-                <div>
-                    <?php if ($this->scripto->canProtect()): ?><?php echo $this->formButton('scripto-talk-page-protect'); ?> <?php endif; ?>
-                </div>
-                <div id="scripto-talk-page-html"><?php echo $this->talkPageHtml; ?></div>
-            </div><!-- #scripto-talk -->
+        <div class="span12">
+            <?php if ($this->scripto->isLoggedIn()): ?><?php echo $this->formButton('scripto-page-watch'); ?> <?php endif; ?>
+              <?php if ($this->scripto->canProtect()): ?><?php echo $this->formButton('scripto-transcription-page-protect'); ?> <?php endif; ?>
+              <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-page-import', __('Import page'), array('style' => 'display:inline; float:none;')); ?><?php endif; ?>
+                <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-document-import', __('Import document'), array('style' => 'display:inline; float:none;')); ?><?php endif; ?>
 
 
-            <div id="options">
-              <ul class="nav">
-              <?php if ($this->scripto->isLoggedIn()): ?>
-                  <li><a href="<?php echo html_escape(url('scripto/watchlist')); ?>"><?php echo __('Your watchlist'); ?></a> </li>
-              <?php endif; ?>
-                  <li><a href="<?php echo html_escape(url('scripto/recent-changes')); ?>"><?php echo __('Recent changes'); ?></a></li>
-                  <li><a href="<?php echo html_escape(url(array('controller' => 'items', 'action' => 'show', 'id' => $this->doc->getId()), 'id')); ?>"><?php echo __('View item'); ?></a></li>
-                  <li><a href="<?php echo html_escape(url(array('controller' => 'files', 'action' => 'show', 'id' => $this->doc->getPageId()), 'id')); ?>"><?php echo __('View file'); ?></a></li>
-              </ul>
-            </div><!-- end options -->
+            </div>
 
-        <!-- end fill -->
+
+
 
 
       </div><!--end of left column-->
 
-      <!-- right column (image)-->
-      <div class="span7">
 
-        <!-- openseadragon viewer ready for iIIIF -->
-        <div id="image-viewer" style="width: 100%; height: 500px;" ></div>
+    </div><!-- end of main row -->
+    <div class="row-fluid"><!--full width row under transcribe -->
+      <!-- discussion -->
+      <div id="scripto-talk">
+          <?php if ($this->doc->canEditTalkPage()): ?>
+          <div id="scripto-talk-edit">
+              <div><?php echo $this->formTextarea('scripto-talk-page-wikitext', $this->doc->getTalkPageWikitext(), array('cols' => '76', 'rows' => '16')); ?></div>
+              <div>
+                  <?php echo $this->formButton('scripto-talk-page-edit', __('Edit discussion'), array('style' => 'display:inline; float:none;')); ?>
+              </div>
+              <p><a href="http://www.mediawiki.org/wiki/Help:Formatting" target="_blank"><?php echo __('wiki formatting help'); ?></a></p>
+          </div><!-- #scripto-talk-edit -->
+          <?php else: ?>
+          <p><?php echo __('You don\'t have permission to discuss this page.'); ?></p>
+          <?php endif; ?>
+          <h2><?php echo __('Current Page Discussion'); ?>
+          <?php if ($this->doc->canEditTalkPage()): ?> [<a href="#" id="scripto-talk-edit-show"><?php echo __('edit'); ?></a>]<?php endif; ?>
+          <?php if ($this->scripto->canProtect()): ?> [<a href="<?php echo html_escape($this->doc->getTalkPageMediawikiUrl()); ?>"><?php echo __('wiki'); ?></a>]<?php endif; ?>
+          [<a href="<?php echo html_escape(url(array('item-id' => $this->doc->getId(), 'file-id' => $this->doc->getPageId(), 'namespace-index' => 1), 'scripto_history')); ?>"><?php echo __('history'); ?></a>]</h2>
+          <div>
+              <?php if ($this->scripto->canProtect()): ?><?php echo $this->formButton('scripto-talk-page-protect'); ?> <?php endif; ?>
+          </div>
+          <div id="scripto-talk-page-html"><?php echo $this->talkPageHtml; ?></div>
+      </div><!-- #scripto-talk -->
 
-      </div><!-- end of right column -->
 
-</article>
+      <div id="options">
+        <ul class="nav">
+        <?php if ($this->scripto->isLoggedIn()): ?>
+            <li><a href="<?php echo html_escape(url('scripto/watchlist')); ?>"><?php echo __('Your watchlist'); ?></a> </li>
+        <?php endif; ?>
+            <li><a href="<?php echo html_escape(url('scripto/recent-changes')); ?>"><?php echo __('Recent changes'); ?></a></li>
+            <li><a href="<?php echo html_escape(url(array('controller' => 'items', 'action' => 'show', 'id' => $this->doc->getId()), 'id')); ?>"><?php echo __('View item'); ?></a></li>
+            <li><a href="<?php echo html_escape(url(array('controller' => 'files', 'action' => 'show', 'id' => $this->doc->getPageId()), 'id')); ?>"><?php echo __('View file'); ?></a></li>
+        </ul>
+      </div><!-- end options -->
+
+
 
 <?php
 //this needs to be somewhere else!
