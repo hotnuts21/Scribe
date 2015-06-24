@@ -132,30 +132,23 @@ echo common('header-transc');
 
 
     </div><!-- end of main row -->
-    <div class="row-fluid top-buffer"><!--full width row under transcribe -->
-      <h3>Discussion/notes</h3>
-      <!-- discussion -->
-      <div id="scripto-talk">
-          <?php if ($this->doc->canEditTalkPage()): ?>
-          <div id="scripto-talk-edit">
-              <div><?php echo $this->formTextarea('scripto-talk-page-wikitext', $this->doc->getTalkPageWikitext(), array('style'=>'width:90%; height:120px; align:cent')); ?></div>
-              <div>
-                  <?php echo $this->formButton('scripto-talk-page-edit', __('Edit discussion'), array('style' => 'display:inline; float:none;')); ?>
-              </div>
-              <p><a href="http://www.mediawiki.org/wiki/Help:Formatting" target="_blank"><?php echo __('wiki formatting help'); ?></a></p>
-          </div><!-- #scripto-talk-edit -->
-          <?php else: ?>
-          <p><?php echo __('You don\'t have permission to discuss this page.'); ?></p>
-          <?php endif; ?>
-          <h2><?php echo __('Current Page Discussion'); ?>
-          <?php if ($this->doc->canEditTalkPage()): ?> [<a href="#" id="scripto-talk-edit-show"><?php echo __('edit'); ?></a>]<?php endif; ?>
-          <?php if ($this->scripto->canProtect()): ?> [<a href="<?php echo html_escape($this->doc->getTalkPageMediawikiUrl()); ?>"><?php echo __('wiki'); ?></a>]<?php endif; ?>
-          [<a href="<?php echo html_escape(url(array('item-id' => $this->doc->getId(), 'file-id' => $this->doc->getPageId(), 'namespace-index' => 1), 'scripto_history')); ?>"><?php echo __('history'); ?></a>]</h2>
-          <div>
-              <?php if ($this->scripto->canProtect()): ?><?php echo $this->formButton('scripto-talk-page-protect'); ?> <?php endif; ?>
-          </div>
-          <div id="scripto-talk-page-html"><?php echo $this->talkPageHtml; ?></div>
-      </div><!-- #scripto-talk -->
+
+
+      <div class="row-fluid top-buffer"><!--full width row under transcribe -->
+        <h3>Discussion/notes</h3>
+        <!-- discussion -->
+        <div id="scripto-talk" class="row-fluid">
+            <?php if ($this->doc->canEditTalkPage()): ?>
+            <div id="scripto-talk-edit" class="span12">
+                <?php echo $this->formTextarea('scripto-talk-page-wikitext', $this->doc->getTalkPageWikitext(), array('style'=>'width:90%; height:120px; align:cent')); ?>
+            </div>
+                <div>
+                    <?php echo $this->formButton('scripto-talk-page-edit', __('Save discussion'), array('style' => 'display:inline; float:none;', 'class'=>'btn btn-primary', 'type'=>'button')); ?>
+                </div>
+        </div><!-- #scripto-talk-edit -->
+            <?php else: ?>
+            <p><?php echo __('You don\'t have permission to discuss this page.'); ?></p>
+            <?php endif; ?>
 
 
       <div id="options">
