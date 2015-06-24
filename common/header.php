@@ -53,32 +53,49 @@
     <div id="wrap" class="container">
 
         <header id="header" role="banner">
+          <div class="navbar navbar-static-top">
+            <div class="navbar-inner">
+                <a class="brand" href="../">Unlocking the Chartist</a>
+                <div class="nav-collapse collapse" id="main-menu">
+                  <?php
+                  $mainNav = public_nav_main();
+                  $mainNav->setUlClass('nav')->setUlId('main-menu-left');
+                  echo $mainNav;
+                  ?>
 
-            <div id="sublinks" class="masthead clearfix">
+                  <ul class="nav pull-right" id="main-menu-right">
+                        <?php if ($scripto->isLoggedIn()): ?>
+                        <li class="dropdown">
+                          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><?php echo $scripto->getUserName(); ?><b class="caret"></b></a>
+                            <ul class="dropdown-menu">
+                                <li><a href="<?php echo WEB_ROOT; ?>/scripto">Your Contributions</a></li>
+                                <li><a href="<?php echo WEB_ROOT; ?>/scripto/watchlist">Your Watchlist</a></li>
+                                <li><a href="<?php echo WEB_ROOT; ?>/scripto/recent-changes">Recent Changes</a></li>
+                                <li><a href="<?php echo WEB_ROOT; ?>/scripto/logout">Logout</a></li>
+                            </ul>
+                        </li>
 
-                <ul class="nav nav-pills pull-right">
+                        <?php else: ?>
 
-                    <?php if ($scripto->isLoggedIn()): ?>
-                    <li class="dropdown"><a href="#" class="dropdown-toggle" data-toggle="dropdown"><strong><?php echo $scripto->getUserName(); ?></strong><b class="caret"></b></a>
-                        <ul class="dropdown-menu">
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto">Your Contributions</a></li>
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto/watchlist">Your Watchlist</a></li>
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto/recent-changes">Recent Changes</a></li>
-                            <li><a href="<?php echo WEB_ROOT; ?>/scripto/logout">Logout</a></li>
-                        </ul>
-                    </li>
+                        <li>
+                        <a href="<?php echo WEB_ROOT; ?>/scripto/login">Sign in or register</a>
+                        </li>
 
-                    <?php else: ?>
-
-                    <li>
-                    <a href="<?php echo WEB_ROOT; ?>/scripto/login"><strong>Sign in or register</strong></a>
-                    </li>
-
-                    <?php endif; ?>
-                </ul>
-
-                <a href="<?php echo WEB_ROOT; ?>"><img src="<?php echo img('sub.png'); ?>" alt="Scribe: an Omeka theme" title="Scribe: an Omeka theme" width="960" height="80" border="0"></a>
+                        <?php endif; ?>
+                    </ul>
+                  </ul>
+                </div>
             </div>
+          </div>
+
+            <div id="search-container">
+
+                <?Php echo search_form(); ?>
+
+            </div>
+            <?php fire_plugin_hook('public_header', array('view'=>$this)); ?>
+            </header>
+
 
         </header><!-- end header -->
 

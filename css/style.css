@@ -605,3 +605,11 @@ hr {
     font-style: bold;
     margin-bottom:20px;
 }
+/* !---------- Navigation ---------- */
+nav ul {
+  list-style: none;
+  margin: 0 auto;
+}
+nav a {
+  display: inline-block;
+}

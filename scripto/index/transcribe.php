@@ -23,7 +23,7 @@ echo common('header-transc');
         <!-- right column (image)-->
       <div class="span7">
           <!-- openseadragon viewer ready for iIIIF -->
-          <div id="image-viewer" style="width: 100%; height: 650px;" ></div>
+          <div id="image-viewer" style="width: 100%; height: 600px;" ></div>
       </div><!-- end of right column -->
 
       <!-- left column (transcription) -->
@@ -97,7 +97,7 @@ echo common('header-transc');
                 </p>
                 <!-- text area -->
                 <?php echo $this->formTextarea('scripto-transcription-page-wikitext', $this->doc->getTranscriptionPageWikitext(), array('style'=> 'height:200px;', 'class'=> 'span12')); ?>
-                <p><?php echo $this->formButton('scripto-transcription-page-edit', __('Save and update'), array('style' => 'display:inline; float:none;')); ?></p>
+                <p><?php echo $this->formButton('scripto-transcription-page-edit', __('Save and update'),array('style' => 'display:inline; float:none;', 'class'=>'btn btn-primary', 'type'=>'button')); ?></p>
              <?php endif; ?>
 
 
@@ -118,34 +118,27 @@ echo common('header-transc');
                 [<a href="<?php echo html_escape(url(array('item-id' => $this->doc->getId(), 'file-id' => $this->doc->getPageId(), 'namespace-index' => 0), 'scripto_history')); ?>"><?php echo __('history'); ?></a>]</strong>
               </p>
           </div>
+          <div class="span12">
+              <?php if ($this->scripto->isLoggedIn()): ?><?php echo $this->formButton('scripto-page-watch',__('Watch page'),array('style' => 'display:inline; float:none;', 'class'=>'btn btn-primary', 'type'=>'button')); ?> <?php endif; ?>
+              <?php if ($this->scripto->canProtect()): ?><?php echo $this->formButton('scripto-transcription-page-protect',__('Protect page'), array('style' => 'display:inline; float:none;', 'class'=>'btn btn-primary', 'type'=>'button')); ?> <?php endif; ?>
+              <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-page-import', __('Import page'),array('style' => 'display:inline; float:none;', 'class'=>'btn btn-primary', 'type'=>'button')); ?><?php endif; ?>
+              <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-document-import', __('Import document'),array('style' => 'display:inline; float:none;', 'class'=>'btn btn-primary', 'type'=>'button')); ?><?php endif; ?>
+
+          </div>
         </div>
-
-
-
-
-        <div class="span12">
-            <?php if ($this->scripto->isLoggedIn()): ?><?php echo $this->formButton('scripto-page-watch'); ?> <?php endif; ?>
-              <?php if ($this->scripto->canProtect()): ?><?php echo $this->formButton('scripto-transcription-page-protect'); ?> <?php endif; ?>
-              <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-page-import', __('Import page'), array('style' => 'display:inline; float:none;')); ?><?php endif; ?>
-                <?php if ($this->scripto->canExport()): ?><?php echo $this->formButton('scripto-transcription-document-import', __('Import document'), array('style' => 'display:inline; float:none;')); ?><?php endif; ?>
-
-
-            </div>
-
-
-
 
 
       </div><!--end of left column-->
 
 
     </div><!-- end of main row -->
-    <div class="row-fluid"><!--full width row under transcribe -->
+    <div class="row-fluid top-buffer"><!--full width row under transcribe -->
+      <h3>Discussion/notes</h3>
       <!-- discussion -->
       <div id="scripto-talk">
           <?php if ($this->doc->canEditTalkPage()): ?>
           <div id="scripto-talk-edit">
-              <div><?php echo $this->formTextarea('scripto-talk-page-wikitext', $this->doc->getTalkPageWikitext(), array('cols' => '76', 'rows' => '16')); ?></div>
+              <div><?php echo $this->formTextarea('scripto-talk-page-wikitext', $this->doc->getTalkPageWikitext(), array('style'=>'width:90%; height:120px; align:cent')); ?></div>
               <div>
                   <?php echo $this->formButton('scripto-talk-page-edit', __('Edit discussion'), array('style' => 'display:inline; float:none;')); ?>
               </div>

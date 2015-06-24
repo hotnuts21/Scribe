@@ -30,7 +30,10 @@
 
     <!-- JavaScripts -->
     <?php
-    queue_js_file('bootstrap.min');
+    queue_js_file(array(
+        'bootstrap.min',
+        'jquery.bxSlider.min',
+    ));
     echo head_js();
     ?>
 </head>
